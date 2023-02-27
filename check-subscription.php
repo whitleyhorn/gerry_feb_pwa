@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once("../db.php");
+require_once("db.php");
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' || strpos($_SERVER['REQUEST_URI'], '/check-subscription.php') === false) {
     http_response_code(400);

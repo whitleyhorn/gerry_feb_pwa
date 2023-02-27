@@ -1,5 +1,5 @@
 <?php
-require_once("../db.php");
+require_once("db.php");
 
 // Listen for POST requests to /subscribe and store the push subscription endpoint in the database
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && strpos($_SERVER['REQUEST_URI'], '/subscribe.php') !== false) {
