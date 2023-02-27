@@ -14,14 +14,15 @@
   <body>
     <h1>Push Notification PWA Test</h1>
     <p>Testing is fun!</p>
-    <button id="send-notification-button" style="display: none">Send Notification</button>
+    <button id="send-notification-button">Send Notification</button>
   </body>
   <script>
   // Check if service worker is supported and register it
   const registerServiceWorker = async () => {
     if ("serviceWorker" in navigator) {
       try {
-        const registration = await navigator.serviceWorker.register("/sw.js");
+        // Register new service worker and don't cache it 
+        const registration = await navigator.serviceWorker.register("/sw.js", { updateViaCache: 'none' });
         if (registration.installing) {
           console.log("Service worker installing");
         } else if (registration.waiting) {
@@ -32,10 +33,9 @@
           // Check if subscription already exists
           const existingSubscription = await checkSubscription();
 
-console.log(existingSubscription);
           // If the subscription doesn't already exist, add it to the database
           if (!existingSubscription) {
-            const subscription = await registration.pushManager.subscribe({ applicationServerKey: <?=json_encode($vapid['public']);?>, userVisibleOnly: true });
+            const subscription = await registration.pushManager.subscribe({ applicationServerKey: urlBase64ToUint8Array(<?=json_encode($vapid['public']);?>), userVisibleOnly: true });
             await fetch("/subscribe.php", {
               method: "POST",
               headers: {
@@ -64,8 +64,6 @@ console.log(existingSubscription);
       });
     }
 
-    // this button will initiate a test push notification. It can be used to confirm that the push notifications work at all, but is otherwise quite limited in its use, so the display should probably be set to "none" most of the time to avoid confusing the lawyers.
-    /*
     const sendNotificationButton = document.getElementById(
       "send-notification-button"
     );
@@ -94,7 +92,6 @@ console.log(existingSubscription);
         });
       }
     });
-    */
 
     // *********
     async function checkSubscription() {
@@ -125,6 +122,21 @@ console.log(existingSubscription);
         return false;
       }
     }
+
+    function urlBase64ToUint8Array(base64String) {
+      var padding = '='.repeat((4 - base64String.length % 4) % 4);
+      var base64 = (base64String + padding)
+          .replace(/\-/g, '+')
+          .replace(/_/g, '/');
+
+      var rawData = window.atob(base64);
+      var outputArray = new Uint8Array(rawData.length);
+
+      for (var i = 0; i < rawData.length; ++i) {
+          outputArray[i] = rawData.charCodeAt(i);
+      }
+      return outputArray;
+  }
 
 
   </script>
