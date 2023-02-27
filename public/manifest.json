@@ -3,7 +3,7 @@
   "name": "Push Notification Test",
   "icons": [
     {
-      "src": "assets/icon.png",
+      "src": "public/icon.png",
       "type": "image/png",
       "sizes": "192x192"
     }

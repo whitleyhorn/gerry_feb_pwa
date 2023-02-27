@@ -3,7 +3,7 @@
   <head>
     <title>Push Notification Test</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" crossorigin="use-credentials" href="manifest.json">
+    <link rel="manifest" crossorigin="use-credentials" href="public/manifest.json">
     <style>
       /* Styles */
     </style>
@@ -69,17 +69,17 @@
         navigator.serviceWorker.getRegistration().then((registration) => {
           let options = {
             body: 'Incoming Call',
-            icon: 'assets/icon.png',
+            icon: 'public/icon.png',
             vibrate: [200, 100, 200, 100, 200, 100, 200],
             actions: [
               {
                 action: "answer",
-                icon: "assets/answer.png",
+                icon: "public/answer.png",
                 title: "Answer"
               },
               {
                 action: "cancel",
-                icon: "assets/cancel.png",
+                icon: "public/cancel.png",
                 title: "Cancel"
               }
             ],

@@ -22,7 +22,7 @@ self.addEventListener("notificationclick", function (event) {
 
   if (action === "answer") {
     // Navigate to the "answer" page
-    event.waitUntil(clients.openWindow("answer.html"));
+    event.waitUntil(clients.openWindow("answer.php"));
   } else {
     // Do something for other actions, if needed
   }
