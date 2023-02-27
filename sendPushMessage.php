@@ -34,16 +34,16 @@ $payload = [
     'notification' => [
         'title' => 'Incoming call',        
         'body' => 'Incoming call',        
-        'icon' => 'assets/icon.png',        
+        'icon' => 'public/icon.png',        
         'vibrate' => [200, 100, 200, 100, 200, 100, 200],
         'actions' => [            [                
             'action' => 'answer',                
-            'icon' => 'assets/answer.png',                
+            'icon' => 'public/answer.png',                
             'title' => 'Answer',            
         ],
         [                
             'action' => 'cancel',                
-            'icon' => 'assets/cancel.png',                
+            'icon' => 'public/cancel.png',                
             'title' => 'Cancel',            
         ],
         ],
