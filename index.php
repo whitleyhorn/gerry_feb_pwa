@@ -1,6 +1,3 @@
-<?php
-  require_once '../credentials.php';
-?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -35,7 +32,7 @@
 
           // If the subscription doesn't already exist, add it to the database
           if (!existingSubscription) {
-            const subscription = await registration.pushManager.subscribe({ applicationServerKey: urlBase64ToUint8Array(<?=json_encode($vapid['public']);?>), userVisibleOnly: true });
+            const subscription = await registration.pushManager.subscribe({ applicationServerKey: urlBase64ToUint8Array(<?=json_encode(getenv('VAPID_PUBLIC'));?>), userVisibleOnly: true });
             await fetch("/subscribe.php", {
               method: "POST",
               headers: {
