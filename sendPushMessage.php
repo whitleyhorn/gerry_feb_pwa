@@ -1,7 +1,6 @@
 <?php
 require_once 'vendor/autoload.php';
-require_once("../db.php");
-require_once("../credentials.php"); // $vapid contains the keys we need
+require_once 'db.php'
 use Minishlink\WebPush\WebPush;
 use Minishlink\WebPush\Subscription;
 
