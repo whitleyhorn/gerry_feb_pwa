@@ -1,11 +1,18 @@
 <?php
 
 $db = (function(){
-    // Connection details
     $host = getenv('MYSQLHOST');
-    $dbname = getenv('MYSQLDATABASE');
-    $username = getenv('MYSQLUSER');
-    $password = getenv('MYSQLPASSWORD');
-    // Establish database connection using PDO
-    return new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+    $port = getenv('MYSQLPORT');
+    $db   = getenv('MYSQLDATABASE');
+    $user = getenv('MYSQLUSER');
+    $pass = getenv('MYSQLPASSWORD');
+    $charset = 'utf8mb4';
+
+    $dsn = "mysql:host=$host;dbname=$db;charset=$charset;port=$port";
+    try {
+        return new \PDO($dsn, $user, $pass);
+    } catch (\PDOException $e) {
+        throw new \PDOException($e->getMessage(), (int)$e->getCode());
+    }
 })();
+
