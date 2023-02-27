@@ -53,4 +53,5 @@ $payload = [
     ],
 ];
 
+$vapid = ['public' => getenv('VAPID_PUBLIC'), 'private' => getenv('VAPID_PRIVATE')];
 sendPushMessage($payload, $vapid, $db);
