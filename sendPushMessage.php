@@ -3,6 +3,10 @@ require_once 'vendor/autoload.php';
 require_once 'db.php';
 use Minishlink\WebPush\WebPush;
 use Minishlink\WebPush\Subscription;
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 // Send push notifications to all subscribed clients
 function sendPushMessage($payload, $vapid, $db) {
