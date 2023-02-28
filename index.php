@@ -1,8 +1,10 @@
 <?php
 require_once 'vendor/autoload.php';
 use Dotenv\Dotenv;
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+if(!isset($_ENV['APP_ENV']) || $_ENV['APP_ENV'] !== 'production'){
+    $dotenv = Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+} 
 ?>
 <!DOCTYPE html>
 <html>
