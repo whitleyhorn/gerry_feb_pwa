@@ -1,3 +1,9 @@
+<?php
+require_once 'vendor/autoload.php';
+use Dotenv\Dotenv;
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -32,7 +38,7 @@
 
           // If the subscription doesn't already exist, add it to the database
           if (!existingSubscription) {
-            const subscription = await registration.pushManager.subscribe({ applicationServerKey: urlBase64ToUint8Array(<?=json_encode(getenv('VAPID_PUBLIC'));?>), userVisibleOnly: true });
+            const subscription = await registration.pushManager.subscribe({ applicationServerKey: urlBase64ToUint8Array(<?=json_encode($_ENV['VAPID_PUBLIC']);?>), userVisibleOnly: true });
             await fetch("/subscribe.php", {
               method: "POST",
               headers: {

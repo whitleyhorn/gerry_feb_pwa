@@ -1,11 +1,11 @@
 <?php
 
 $db = (function(){
-    $host = getenv('MYSQLHOST');
-    $port = getenv('MYSQLPORT');
-    $db   = getenv('MYSQLDATABASE');
-    $user = getenv('MYSQLUSER');
-    $pass = getenv('MYSQLPASSWORD');
+    $host = $_ENV['MYSQLHOST'];
+    $port = $_ENV['MYSQLPORT'];
+    $db   = $_ENV['MYSQLDATABASE'];
+    $user = $_ENV['MYSQLUSER'];
+    $pass = $_ENV['MYSQLPASSWORD'];
     $charset = 'utf8mb4';
 
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset;port=$port";

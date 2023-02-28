@@ -1,12 +1,14 @@
 <?php
 require_once 'vendor/autoload.php';
-require_once 'db.php';
 use Minishlink\WebPush\WebPush;
 use Minishlink\WebPush\Subscription;
 use Dotenv\Dotenv;
+if(!isset($_ENV['APP_ENV']) || $_ENV['APP_ENV'] !== 'production'){
+    $dotenv = Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+} 
+require_once 'db.php';
 
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
 
 // Send push notifications to all subscribed clients
 function sendPushMessage($payload, $vapid, $db) {
@@ -20,7 +22,7 @@ function sendPushMessage($payload, $vapid, $db) {
             'publicKey' => $keys['p256dh'],
             'authToken' => $keys['auth'],
         ]);
-        $subject = 'mailto:'.getenv('PERSONAL_EMAIL');
+        $subject = 'mailto:'.$_ENV['PERSONAL_EMAIL'];
         $webPush = new WebPush(array(
             'VAPID' => array(
                 'subject' => $subject,
@@ -57,5 +59,5 @@ $payload = [
     ],
 ];
 
-$vapid = ['public' => getenv('VAPID_PUBLIC'), 'private' => getenv('VAPID_PRIVATE')];
+$vapid = ['public' => $_ENV['VAPID_PUBLIC'], 'private' => $_ENV['VAPID_PRIVATE']];
 sendPushMessage($payload, $vapid, $db);

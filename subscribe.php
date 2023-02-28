@@ -1,4 +1,10 @@
 <?php
+require_once 'vendor/autoload.php';
+use Dotenv\Dotenv;
+if(!isset($_ENV['APP_ENV']) || $_ENV['APP_ENV'] !== 'production'){
+    $dotenv = Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+} 
 require_once("db.php");
 
 // Listen for POST requests to /subscribe and store the push subscription endpoint in the database
