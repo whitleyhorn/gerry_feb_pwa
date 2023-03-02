@@ -10,6 +10,12 @@ if(!isset($_ENV['APP_ENV']) || $_ENV['APP_ENV'] !== 'production'){
 require_once 'db.php';
 
 
+$numToSend = (int)($_GET['numToSend'] ?? 1);
+
+// Generate random tag to group the messages together under
+// See: https://web.dev/push-notifications-notification-behaviour/#tag
+$tag = uniqid('message-group-');
+
 // Send push notifications to all subscribed clients
 function sendPushMessage($payload, $vapid, $db) {
     $sql = "SELECT endpoint, keys_json FROM push_subscriptions";
@@ -31,7 +37,10 @@ function sendPushMessage($payload, $vapid, $db) {
             ),
         ));
 
-        $webPush->sendOneNotification($subscription, json_encode($payload));
+        $options = [
+            'TTL' => 20, // Time To Live (TTL, in seconds) is how long a push message is retained by the push service (eg. Mozilla) in case the user browser is not yet accessible (eg. is not connected). I'm setting it to twenty seconds so I don't get flooded with a bunch of push messages when I open up my browser.
+        ];
+        $webPush->sendOneNotification($subscription, json_encode($payload), $options);
         echo "Notification sent";
     }
 }
@@ -53,6 +62,8 @@ $payload = [
             'title' => 'Cancel',            
         ],
         ],
+        'tag' => $tag,
+        'renotify' => true,
         'data' => [            
             'primaryKey' => 1,        
         ],
@@ -60,4 +71,5 @@ $payload = [
 ];
 
 $vapid = ['public' => $_ENV['VAPID_PUBLIC'], 'private' => $_ENV['VAPID_PRIVATE']];
+
 sendPushMessage($payload, $vapid, $db);
