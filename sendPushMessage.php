@@ -38,7 +38,13 @@ function sendPushMessage($payload, $vapid, $db) {
         ));
 
         $options = [
-            'TTL' => 20, // Time To Live (TTL, in seconds) is how long a push message is retained by the push service (eg. Mozilla) in case the user browser is not yet accessible (eg. is not connected). I'm setting it to twenty seconds so I don't get flooded with a bunch of push messages when I open up my browser.
+            /* Time To Live (TTL, in seconds) is how long a push message 
+             * is retained by the push service (eg. Mozilla) in case 
+             * the user browser is not yet accessible (eg. is not connected).
+             * I'm setting it to twenty seconds so I don't get flooded with 
+             * a bunch of push messages when I open up my browser.
+             */
+            'TTL' => 20, 
         ];
         $webPush->sendOneNotification($subscription, json_encode($payload), $options);
         echo "Notification sent";

@@ -34,7 +34,7 @@ self.addEventListener("push", function (event) {
         clearInterval(intervalId);
         clickedNotifications.delete(tag);
       }
-    }, 4000);
+    }, 4400);
   } else {
     console.log("Push event but no data");
   }
