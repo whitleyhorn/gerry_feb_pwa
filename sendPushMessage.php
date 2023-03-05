@@ -9,9 +9,6 @@ if(!isset($_ENV['APP_ENV']) || $_ENV['APP_ENV'] !== 'production'){
 } 
 require_once 'db.php';
 
-
-$numToSend = (int)($_GET['numToSend'] ?? 1);
-
 // Generate random tag to group the messages together under
 // See: https://web.dev/push-notifications-notification-behaviour/#tag
 $tag = uniqid('message-group-');
