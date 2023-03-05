@@ -1,4 +1,6 @@
 let clickedNotifications = new Map();
+const notificationRepeatCount = 4;
+const notificationDuration = 4400;
 
 self.addEventListener("push", function (event) {
   console.log("push event", event);
@@ -19,7 +21,10 @@ self.addEventListener("push", function (event) {
     clickedNotifications.set(tag, false);
     let notificationCounter = 0;
     let intervalId = setInterval(function () {
-      if (!clickedNotifications.get(tag) && notificationCounter < 4) {
+      if (
+        !clickedNotifications.get(tag) &&
+        notificationCounter < notificationRepeatCount
+      ) {
         self.registration.showNotification(data.notification.title, {
           body: data.notification.body,
           icon: data.notification.icon,
@@ -34,7 +39,7 @@ self.addEventListener("push", function (event) {
         clearInterval(intervalId);
         clickedNotifications.delete(tag);
       }
-    }, 4400);
+    }, notificationDuration);
   } else {
     console.log("Push event but no data");
   }
