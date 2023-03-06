@@ -3,10 +3,8 @@ const notificationRepeatCount = 4;
 const notificationDuration = 4400;
 
 self.addEventListener("push", function (event) {
-  console.log("push event", event);
   if (event.data) {
-    var data = event.data.json();
-    console.log("data", data);
+    const data = event.data.json();
     const tag = data.notification.tag;
     self.registration.showNotification(data.notification.title, {
       body: data.notification.body,
@@ -46,9 +44,8 @@ self.addEventListener("push", function (event) {
 });
 
 self.addEventListener("notificationclick", function (event) {
-  console.log("EVENT", event);
-  var notification = event.notification;
-  var action = event.action;
+  const notification = event.notification;
+  const action = event.action;
   const tag = notification.tag;
 
   if (action === "answer") {
